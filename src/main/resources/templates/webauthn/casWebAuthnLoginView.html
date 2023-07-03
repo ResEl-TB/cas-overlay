@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <title>Authentification FIDO2</title>
+    <title th:text="#{cas.mfa.web-authn.pagetitle}"></title>
+    <link href="../../static/css/cas.css" rel="stylesheet" th:remove="tag">
+</head>
+<body>
+<main role="main">
+    <div layout:fragment="content" class="webauthn">
+        <div th:replace="fragments/webAuthnLogin :: webAuthnLogin" th:delete="tag">
+            <a href="fragments/webAuthnLogin.html">webAuthnLogin</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

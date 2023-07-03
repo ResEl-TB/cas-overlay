@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+
+    <title layout:title-pattern="$LAYOUT_TITLE — $CONTENT_TITLE"
+        th:text="${#themes.code('cas.theme.name')}">
+    </title>
+
+    <span th:replace="fragments/includes :: stylesheets">
+        <a href="fragments/includes.html">Theme</a> stylesheet fragment will go here
+    </span>
+
+    <span th:remove="tag" th:each="file : ${#strings.arraySplit(#themes.code('cas.standard.css.file'), ',')}">
+        <link rel="stylesheet" type="text/css" href="../static/css/cas.css" th:href="@{${file}}" />
+    </span>
+    <link rel="shortcut icon" th:href="@{${#themes.code('cas.favicon.file')}}"/>
+</head>
+
+<body xtra:strip-whitespace="deep">
+    <script th:replace="fragments/scripts"></script>
+    <div layout:fragment="content" id="content"/>
+    <div id="side">
+        <div class="side-block">
+            <div class="title">Avant de vous connecter…</div>
+            <p>Assurez-vous que votre barre d’adresse indique&nbsp;:</p>
+            <div class="address-bar">
+                <span class="accented">https</span>
+                <span>://</span>
+                <span class="blank">sso</span>
+                <span>.</span>
+                <span class="semibold">resel.fr</span>
+                <span>/</span>
+                <span class="blank faded">cas/</span>
+            </div>
+            <div class="decomposition" style="height: 92px;">
+                <div data-from="0" data-to="5" class="selection accented">
+                    <div class="explanation">(ou <i class="lock"></i>) Signifie que la connexion utilise un protocole de sécurité</div>
+                </div>
+                <div data-from="12" data-to="20" class="selection above">
+                    <div class="explanation">Signifie que le serveur contacté est <i>a priori</i> géré par le ResEl</div>
+                </div>
+            </div>
+            <hr>
+            <p class="alert">Attention cependant&nbsp;: bien que nécessaires, ces deux critères ne sont pas suffisants à assurer la sécurité de votre connexion.</p>
+        </div>
+        <div class="side-block">
+            <div class="title">Pendant votre navigation…</div>
+            <p>
+                Vous vous éloignez de votre ordinateur ? Pensez à le verrouiller !
+                <ul>
+                    <li>
+                        Sur Windows et la plupart des Linux, 
+                        <span class="kbd">⊞&nbsp;Win</span>
+                        &nbsp;+ 
+                        <span class="kbd">L</span>
+                         ;
+                    </li>
+                    <li>
+                        Sur macOS, 
+                        <span class="kbd">⌃&nbsp;control</span>
+                        &nbsp;+ 
+                        <span class="kbd">⌘&nbsp;command</span>
+                        &nbsp;+ 
+                        <span class="kbd">Q</span>
+                        .
+                    </li>
+                </ul>
+            </p>
+	    <p>Vous n’êtes pas sur votre ordinateur personnel ? Un réflexe : la navigation privée !</p>
+        </div>
+        <div class="side-block">
+            <div class="title">À la fin de votre session…</div>
+            <p>
+                <div>Si vous utilisez un ordinateur partagé sans navigation privée, pensez à vous déconnecter des sites que vous avez visités. Trop laborieux ? Déconnectez-vous des sites les plus fréquents sur </div>
+                <a href="https://logout.resel.fr/" class="url button" target="_blank">logout.resel.fr</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

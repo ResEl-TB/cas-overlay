@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <title th:text="#{screen.consent.title}">Consent View</title>
+    <link type="text/css" href="../../static/css/cas.css" rel="stylesheet" th:remove="tag"/>
+</head>
+
+<body>
+<main role="main">
+    <div id="content" class="consent" layout:fragment="content">
+        <div class="title" th:text="#{screen.consent.title}"/>
+        <form method="post" id="fm1" th:action="@{/login}">
+            <p class="sub" th:utext="#{screen.consent.attributes.header}"/>
+            <table class="padded">
+                <thead>
+                <tr>
+                    <th role="columnheader" scope="col" th:utext="#{screen.consent.attributes.attribute}"/>
+                    <th role="columnheader" scope="col" th:utext="#{screen.consent.attributes.values}"/>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="attribute : ${attributes}">
+                        <td>
+                            <code th:id="${attribute.name}">
+                                <span th:if="${attribute.friendlyName}" th:utext="${attribute.friendlyName}"/>
+                                <span th:unless="${attribute.friendlyName}" th:utext="${attribute.name}"/>
+                            </code>
+                        </td>
+                        <td>
+                            <code th:id="${attribute.name + '-value'}"><span th:utext="${#strings.listJoin(attribute.values, ', ')}"/></code>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="sub" th:text="#{screen.consent.options.header}"/>
+            <div class="padded">
+                <div>
+                    <input type="radio" name="option" id="optionAlways" value="0" th:checked="${option == 0}"/>
+                    <label for="optionAlways" th:utext="#{screen.consent.options.always}"/>
+                </div>
+                <div>
+                    <input type="radio" name="option" id="optionAttributeName" value="1" th:checked="${option == 1}"/>
+                    <label for="optionAttributeName" th:utext="#{screen.consent.options.attributename}"/>
+                </div>
+                <div>
+                    <input type="radio" name="option" id="optionAttributeValue" value="2" th:checked="${option == 2}"/>
+                    <label for="optionAttributeValue" th:utext="#{screen.consent.options.attributevalue}"/>
+                </div>
+            </div>
+
+            <p class="sub" th:text="#{screen.consent.options.reminder.header}"/>
+            <div class="center">
+                <input type="number" name="reminder" id="reminder" th:value="${reminder}"/>
+                <select name="reminderTimeUnit" id="reminder-time-unit">
+                    <option value="days" th:selected="${#strings.toLowerCase(reminderTimeUnit) == 'days'}" th:text="#{screen.consent.options.timeunit.days}"/>
+                    <option value="weeks" th:selected="${#strings.toLowerCase(reminderTimeUnit) == 'weeks'}" th:text="#{screen.consent.options.timeunit.weeks}"/>
+                    <option value="months" th:selected="${#strings.toLowerCase(reminderTimeUnit)  == 'months'}" th:text="#{screen.consent.options.timeunit.months}"/>
+                </select>
+            </div>
+            <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
+            <input type="hidden" name="_eventId" value="confirm"/>
+            <hr>
+            <div class="center">
+                <input name="confirm" id="confirm" accesskey="l" type="submit" th:value="#{screen.consent.confirm}"/>
+                <a id="cancel" name="cancel" th:href="@{/login}" th:text="#{screen.consent.cancel}"/>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

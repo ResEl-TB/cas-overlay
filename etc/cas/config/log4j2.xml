@@ -6,8 +6,8 @@ Set -Dlog4j2.contextSelector=org.apache.logging.log4j.core.selector.BasicContext
 <!-- Specify the refresh internal in seconds. -->
 <Configuration monitorInterval="5" packages="org.apereo.cas.logging">
     <Properties>
-        <Property name="baseDir">/var/log</Property>
-        <Property name="cas.log.level">info</Property>
+        <Property name="baseDir">/var/log/cas</Property>
+        <Property name="cas.log.level">warn</Property>
         <Property name="spring.webflow.log.level">warn</Property>
         <Property name="spring.security.log.level">info</Property>
         <Property name="spring.cloud.log.level">warn</Property>
@@ -114,7 +114,7 @@ Set -Dlog4j2.contextSelector=org.apache.logging.log4j.core.selector.BasicContext
         <Logger name="org.springframework.boot.context.embedded" level="info" />
         <Logger name="org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration" level="${sys:spring.security.log.level}" />
         <Logger name="org.springframework.boot.autoconfigure.security" level="${sys:spring.security.log.level}" />
-        <Logger name="org.springframework.boot.devtools" level="debug" />
+        <Logger name="org.springframework.boot.devtools" level="warn" />
         
         <Logger name="org.springframework" level="warn" />
         <Logger name="org.springframework.webflow" level="${sys:spring.webflow.log.level}"/>

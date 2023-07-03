@@ -1,0 +1,17 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+    <title th:text="#{screen.success.header}"></title>
+    <link href="../../static/css/cas.css" rel="stylesheet" th:remove="tag"/>
+</head>
+
+<body>
+<main role="main">
+    <div layout:fragment="content">
+        <div class="title" th:utext="#{screen.success.header}"/>
+        <p th:utext="#{screen.success.success(${authentication.principal.attributes.firstName[0]})}"/>
+        <p th:utext="#{screen.success.security}"/>
+    </div>
+</main>
+</body>
+</html>

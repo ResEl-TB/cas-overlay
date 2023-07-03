@@ -130,21 +130,25 @@ dependencies {
      * since versions are all resolved and controlled by the dependency management
      * plugin via the CAS bom.
      **/
+    implementation "org.apereo.cas:cas-server-support-oauth-webflow"
     implementation "org.apereo.cas:cas-server-support-oidc"
+    implementation "org.ldaptive:ldaptive:2.1.0"
     implementation "org.apereo.cas:cas-server-support-ldap"
     implementation "org.apereo.cas:cas-server-support-gauth"
     implementation "org.apereo.cas:cas-server-support-gauth-mongo"
     implementation "org.apereo.cas:cas-server-support-simple-mfa"
-    implementation "org.apereo.cas:cas-server-support-trusted-mfa"
-    implementation "org.apereo.cas:cas-server-support-trusted-mfa-mongo"
+    //implementation "org.apereo.cas:cas-server-support-trusted-mfa"
+    //implementation "org.apereo.cas:cas-server-support-trusted-mfa-mongo"
     implementation "org.apereo.cas:cas-server-support-u2f"
     implementation "org.apereo.cas:cas-server-support-u2f-mongo"
     implementation "org.apereo.cas:cas-server-support-webauthn"
+    implementation "org.apereo.cas:cas-server-support-webauthn-mongo"
     implementation "org.apereo.cas:cas-server-support-reports"
     implementation "org.apereo.cas:cas-server-core-api-configuration-model"
     implementation "org.apereo.cas:cas-server-webapp-init"
     implementation "org.apereo.cas:cas-server-core-notifications"
     implementation "org.apereo.cas:cas-server-support-consent-webflow"
+    implementation "org.apereo.cas:cas-server-support-consent-mongo"
     implementation "org.apereo.cas:cas-server-support-saml-idp"
     implementation "org.apereo.cas:cas-server-support-git-service-registry"
 
@@ -161,10 +165,8 @@ dependencies {
         }
     }
 
+    implementation "com.connect-group:thymeleaf-extras:2.0.2"
 
-
-    
-    
     developmentOnly "org.springframework.boot:spring-boot-devtools:${project.springBootVersion}"
 }
 

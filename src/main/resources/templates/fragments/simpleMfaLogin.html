@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Service UI Fragment</title>
+    <link href="../../static/css/cas.css" rel="stylesheet" th:remove="tag"/>
+</head>
+<body>
+<main role="main">
+    <div th:fragment="simpleMfaLogin" th:remove="tag">
+        <form method="post" id="fm1" th:object="${credential}" th:action="@{/login}" th:classappend="${flowRequestContext.messageContext.hasErrorMessages()}? 'error'">
+            <div id="error">
+                <div class="title" th:utext="#{screen.error.page.heading}"/>
+                <div id="error-message">
+                    <p th:each="err : ${flowRequestContext.messageContext.allMessages}" th:utext="${err.text}"/>
+                </div>
+            </div>
+
+            <div class="title" style="padding-right: 80px" th:utext="#{cas.mfa.simple.label.token}"/>
+
+            <input type="hidden" id="eventId" name="_eventId" value="submit"/>
+            <input type="hidden" name="execution" th:value="${flowExecutionKey}"/>
+            <div id="pincode">
+                <input class="pinput" type="text" id="pin-1" minlength="1" maxlength="1" data-id="1" inputmode="numeric" pattern="[0-9]" autofocus>
+                <input class="pinput" type="text" id="pin-2" minlength="1" maxlength="1" data-id="2" inputmode="numeric" pattern="[0-9]">
+                <input class="pinput" type="text" id="pin-3" minlength="1" maxlength="1" data-id="3" inputmode="numeric" pattern="[0-9]">
+                <input class="pinput" type="text" id="pin-4" minlength="1" maxlength="1" data-id="4" inputmode="numeric" pattern="[0-9]">
+                <input class="pinput" type="text" id="pin-5" minlength="1" maxlength="1" data-id="5" inputmode="numeric" pattern="[0-9]">
+                <input class="pinput" type="text" id="pin-6" minlength="1" maxlength="1" data-id="6" inputmode="numeric" pattern="[0-9]">
+                <input type="submit" value="OK" accesskey="l">
+            </div>
+            <input type="hidden" name="token" id="token" th:field="*{token}" size="6" autocomplete="off" required />
+            <button id="resend" name="resend" th:text="#{cas.mfa.simple.label.resend}" formnovalidate/>
+        </form>
+        <script type="text/javascript" th:inline="javascript">
+            const pinputs = [...document.getElementsByClassName('pinput')];
+
+            document.getElementById('resend').addEventListener('click', () => {
+                document.getElementById('eventId').value = 'resend';
+            });
+
+            function valid() {
+                return [...pinputs].every(e => e.validity.valid && e.value.length === 1);
+            }
+
+            pinputs.forEach(el => {
+                el.addEventListener('keypress', e => {
+                    if (e.key === 'Enter' && !valid())
+                        e.preventDefault();
+                });
+
+                el.addEventListener('keyup', e => {
+                    document.getElementById('token').value = pinputs.map(e => e.value).join('');
+                    if (valid())
+                        document.getElementById('pincode').className = 'valid';
+                    else
+                        document.getElementById('pincode').className = '';
+                    const id = +e.target.dataset.id;
+                    if ((e.key === 'Backspace' || e.key === 'ArrowLeft') && id !== 1)
+                        document.getElementById(`pin-${id-1}`).focus();
+                    else if ((e.key.length == 1 || e.key === 'ArrowRight') && id !== 6)
+                        document.getElementById(`pin-${id+1}`).focus();
+                    else
+                        e.target.select();
+                });
+                el.addEventListener('focus', e => e.target.select());
+            });
+        </script>
+    </div>
+</main>
+</body>
+</html>
